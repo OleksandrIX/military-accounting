@@ -112,7 +112,7 @@ const LoadingScreen = () => {
 
     return (
         <div>
-            <a href='/'>Home</a>
+            <a href='/'>Повернутися на головну</a>
             <TotalTechniquesCard totalTechniques={totalTechniques}/>
             <MonthlyTechniquesCard currentMonthTechniques={currentMonthTechniques} currentDate={currentDateTechniques}/>
             <Chart monthlyTechniquesData={data}/>
