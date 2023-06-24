@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Card, Statistic } from 'antd';
+import React, {useEffect, useState} from 'react';
+import {Card, Statistic} from 'antd';
 import {
     LineChart,
     Line,
@@ -13,27 +13,27 @@ import {
 import Lottie from 'react-lottie';
 import tankAnimation from './assets/tankAnimation.json';
 
-const { Meta } = Card;
+const {Meta} = Card;
 
-const MonthlyTechniquesCard = ({ currentMonthTechniques, currentDate }) => {
+const MonthlyTechniquesCard = ({currentMonthTechniques, currentDate}) => {
     return (
-        <Card title="Отримана техніка за останній час" style={{ marginBottom: '16px' }}>
-            <Statistic value={currentMonthTechniques} />
+        <Card title="Отримана техніка за останній час" style={{marginBottom: '16px'}}>
+            <Statistic value={currentMonthTechniques}/>
             <p>Поточна дата: {currentDate.toString()}</p>
         </Card>
     );
 };
 
-const TotalTechniquesCard = ({ totalTechniques }) => {
+const TotalTechniquesCard = ({totalTechniques}) => {
     return (
-        <Card title="Загальна отримана техніка" style={{ marginBottom: '16px' }}>
-            <Statistic value={totalTechniques} />
+        <Card title="Загальна отримана техніка"  style={{marginBottom: '16px'}}>
+            <Statistic value={totalTechniques}/>
         </Card>
     );
 };
 
-const Chart = ({ monthlyTechniquesData }) => {
-    const CustomTooltip = ({ active, payload, label }) => {
+const Chart = ({monthlyTechniquesData}) => {
+    const CustomTooltip = ({active, payload, label}) => {
         if (active && payload && payload.length) {
             const data = payload[0].payload;
             return (
@@ -51,13 +51,13 @@ const Chart = ({ monthlyTechniquesData }) => {
     };
     return (
         <ResponsiveContainer width="100%" height={300}>
-            <LineChart data={monthlyTechniquesData} margin={{ top: 20, right: 30, left: 20, bottom: 10 }}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="date" />
-                <YAxis />
-                <Tooltip content={<CustomTooltip />} />
-                <Legend />
-                <Line type="monotone" dataKey="countOfEquipment" stroke="#8884d8" activeDot={{ r: 8 }} />
+            <LineChart data={monthlyTechniquesData} margin={{top: 20, right: 30, left: 20, bottom: 10}}>
+                <CartesianGrid strokeDasharray="3 3"/>
+                <XAxis dataKey="date"/>
+                <YAxis/>
+                <Tooltip content={<CustomTooltip/>}/>
+                <Legend/>
+                <Line type="monotone" dataKey="countOfEquipment" stroke="#8884d8" activeDot={{r: 8}}/>
             </LineChart>
         </ResponsiveContainer>
     );
@@ -95,8 +95,8 @@ const LoadingScreen = () => {
     if (loading) {
         return (
             <div className="loading-container">
-                <Lottie options={defaultOptions} height={200} width={200} />
-                <h2 style={{ marginTop: '16px' }}>Завантаження...</h2>
+                <Lottie options={defaultOptions} height={200} width={200}/>
+                <h2 style={{marginTop: '16px'}}>Завантаження...</h2>
             </div>
         );
     }
@@ -112,9 +112,10 @@ const LoadingScreen = () => {
 
     return (
         <div>
-            <TotalTechniquesCard totalTechniques={totalTechniques} />
-            <MonthlyTechniquesCard currentMonthTechniques={currentMonthTechniques} currentDate={currentDateTechniques} />
-            <Chart monthlyTechniquesData={data} />
+            <a href='/'>Home</a>
+            <TotalTechniquesCard totalTechniques={totalTechniques}/>
+            <MonthlyTechniquesCard currentMonthTechniques={currentMonthTechniques} currentDate={currentDateTechniques}/>
+            <Chart monthlyTechniquesData={data}/>
         </div>
     );
 };
@@ -122,7 +123,7 @@ const LoadingScreen = () => {
 const LineGraph = () => {
     return (
         <div>
-            <LoadingScreen />
+            <LoadingScreen/>
         </div>
     );
 };
