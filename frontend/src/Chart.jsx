@@ -4,8 +4,6 @@ import {LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsiv
 import Lottie from 'react-lottie';
 import tankAnimation from './assets/tankAnimation.json';
 
-const {Meta} = Card;
-
 const totalTechniques = 1000;
 
 const monthlyTechniquesData = [
