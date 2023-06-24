@@ -20,19 +20,28 @@ const getEquipments = async (url) => {
     return (await axios.get(url)).data;
 };
 
+const creatEquipment = async (url, data) => {
+    return (await axios.post(url, data)).data;
+}
+
 function Main() {
+    const [refreshTable, setRefreshTable] = useState(true);
     const [equipments, setEquipments] = useState([]);
     const [addModal, setAddModal] = useState(false);
 
     useEffect(() => {
         getEquipments(serverAPI.equipments)
             .then((data) => {
-                for (const equipment of data) {
-                    setEquipments(prevState => [...prevState, equipment]);
+                if (refreshTable) {
+                    setEquipments([]);
+                    for (const equipment of data) {
+                        setEquipments(prevState => [...prevState, equipment]);
+                    }
+                    setRefreshTable(false);
                 }
             })
             .catch(e => console.log(e));
-    }, []);
+    }, [refreshTable]);
 
     const openAddModal = () => {
         setAddModal(true);
@@ -50,8 +59,7 @@ function Main() {
             </div>
             <Button onClick={openAddModal}>Open Add Modal</Button>
             <Modal open={addModal}
-                   onClose={closeAddModal}
-            >
+                   onClose={closeAddModal}>
                 <Box sx={{
                     position: 'absolute',
                     top: '50%',
@@ -63,7 +71,9 @@ function Main() {
                     boxShadow: 24,
                     p: 2
                 }}>
-                    <AddModal></AddModal>
+                    <AddModal closeModal={() => closeAddModal()}
+                              refreshTable={() => setRefreshTable(true)}>
+                    </AddModal>
                 </Box>
             </Modal>
             <a href="/statistic">Statistic</a>
@@ -71,34 +81,91 @@ function Main() {
     );
 }
 
-function AddModal({}) {
+function AddModal({closeModal, refreshTable}) {
+    const [name, setName] = useState("");
+    const [type, setType] = useState("");
+    const [description, setDescription] = useState("");
+    const [country, setCountry] = useState("");
+    const [countOfEquipment, setCountOfEquipment] = useState("");
+    const [date, setDate] = useState("");
+
+    const changeName = (event) => {
+        setName(event.target.value);
+    };
+
+    const changeType = (event) => {
+        setType(event.target.value);
+    };
+
+    const changeDescription = (event) => {
+        setDescription(event.target.value);
+    };
+
+    const changeCountry = (event) => {
+        setCountry(event.target.value);
+    };
+
+    const changeCountOfEquipment = (event) => {
+        setCountOfEquipment(event.target.value);
+    };
+
+    const changeDate = (event) => {
+        setDate(event.target.value);
+    };
+
+    const addEquipment = async (event) => {
+        event.preventDefault();
+        const data = {name, type, description, country, countOfEquipment, date};
+        await creatEquipment(serverAPI.equipments, data);
+        closeModal();
+        refreshTable();
+    };
+
     return (
         <div className="modalContent">
             <p className="nameModal">Add equipment</p>
-            <form className="form">
+            <form className="form" onSubmit={addEquipment}>
                 <label htmlFor="name">
                     Name:
-                    <input id="name" name="name" type="text" required autoFocus={true}/>
+                    <input id="name" name="name" type="text"
+                           value={name}
+                           onChange={changeName}
+                           required autoFocus={true}/>
                 </label>
                 <label htmlFor="type">
                     Type:
-                    <input id="type" name="type" type="text" required/>
+                    <input id="type" name="type" type="text"
+                           value={type}
+                           onChange={changeType}
+                           required/>
                 </label>
                 <label htmlFor="description">
                     Description:
-                    <input id="description" name="description" type="text" required/>
+                    <input id="description" name="description" type="text"
+                           value={description}
+                           onChange={changeDescription}
+                           required/>
                 </label>
                 <label htmlFor="country">
                     Country:
-                    <input id="country" name="country" type="text" required/>
+                    <input id="country" name="country" type="text"
+                           value={country}
+                           onChange={changeCountry}
+                           required/>
                 </label>
                 <label htmlFor="countOfEquipment">
                     Count Of Equipment:
-                    <input id="countOfEquipment" name="countOfEquipment" type="text" required/>
+                    <input id="countOfEquipment" name="countOfEquipment" type="text"
+                           value={countOfEquipment}
+                           onChange={changeCountOfEquipment}
+                           required/>
                 </label>
                 <label htmlFor="date">
                     Date:
-                    <input id="date" name="date" type="date" required/>
+                    <input id="date" name="date" type="date"
+                           value={date}
+                           onChange={changeDate}
+                           required/>
                 </label>
                 <input className="button add" type="submit" value="Add"/>
             </form>
