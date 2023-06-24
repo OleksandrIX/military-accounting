@@ -13,7 +13,6 @@ import {
 import Lottie from 'react-lottie';
 import tankAnimation from './assets/tankAnimation.json';
 
-const {Meta} = Card;
 
 const MonthlyTechniquesCard = ({currentMonthTechniques, currentDate}) => {
     return (
