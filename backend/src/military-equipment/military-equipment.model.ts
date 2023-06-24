@@ -19,7 +19,7 @@ export class MilitaryEquipment {
   country: string;
 
   @Column()
-  countOfEquipment: string;
+  countOfEquipment: number;
 
   @Column({type: 'date'})
   date: string
