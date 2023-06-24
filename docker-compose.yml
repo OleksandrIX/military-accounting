@@ -1,0 +1,26 @@
+version: '3'
+services:
+  server:
+    build: ./backend # шлях до папки з серверною частиною
+    ports:
+      - '8080:8080' # змінній порт з сервера можна присвоїти будь-яке значення
+    depends_on:
+      - database
+
+  client:
+    build: ./frontend # шлях до папки з клієнтською частиною
+    ports:
+      - '3000:3000' # змінній порт з клієнта можна присвоїти будь-яке значення
+
+  database:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: Pishexod22
+      MYSQL_DATABASE: work_work
+      MYSQL_USER: root
+      MYSQL_PASSWORD: Pishexod22
+    volumes:
+      - db_data:/var/lib/mysql
+
+volumes:
+  db_data:
